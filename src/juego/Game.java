@@ -2,70 +2,85 @@ package juego;
 
 import javax.swing.*;
 
-import entidades.Jugador;
-import juego.TableroInterface;
+import pantallas.PantallaGameOver;
+import pantallas.PantallaVictoria;
 
+import entidades.Enemigo;
+import entidades.Entidad;
+import javax.swing.JPanel;
+
+import entidades.Jugador;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
-public class Game extends JFrame implements TableroInterface, KeyListener{
+
+public class Game extends JFrame implements TableroInterface, KeyListener {
     Tablero tablero = new Tablero();
     // Obstaculo[] obstaculos;
-    // TImerJuego timer;
-    public Game(){
+    static Cronometro cronometro = new Cronometro();
+
+    public Game() {
         setTitle("Juego");
         setSize(width, height);
         add(tablero);
         addKeyListener(this);
+        tablero.add(cronometro);
+        cronometro.countdownTimer(this);
+        cronometro.timer.start();
         setVisible(true);
+        pack();
     }
-    @Override
-    public void keyTyped(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            System.out.println("Right key typed");
-        }
-        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            System.out.println("Left key typed");
-        }
 
+    public void finalizar() {
+        if (tablero.jugador.gano()) {
+            PantallaVictoria pantallavictoria = new PantallaVictoria();
+            tablero.add(pantallavictoria);
+        } else {
+            PantallaGameOver pantallaGameOver = new PantallaGameOver();
+            tablero.add(pantallaGameOver);
+        }
+        // cronometro.timer.stop();
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
 
-        for(int i = 0; i<= height/tileSize; i++){
-            for(int j = 0; j<= width/tileSize; j++){
-                
-                System.out.print(tablero.tiles[i][j]+ " ");
-            }
-                System.out.println("");
-        }
-        switch(e.getKeyCode()){
+        // for(int i=0; i<height/tileSize; i++){
+        // for(int j=0; j<width/tileSize; j++){
+        // System.out.print(tablero.tiles[i][j]+ " ");
+        // }
+
+        // System.out.println("");
+        // }
+        tablero.limpiarMosaicos(tablero.jugador);
+        switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
                 tablero.jugador.moveUp();
-                tablero.limpiarMosaicosJugador();
-                tablero.llenarMosaicos(tablero.jugador);
                 break;
             case KeyEvent.VK_DOWN:
                 tablero.jugador.moveDown();
-                tablero.limpiarMosaicosJugador();
-                tablero.llenarMosaicos(tablero.jugador);
                 break;
             case KeyEvent.VK_RIGHT:
                 tablero.jugador.moveRight();
-                tablero.limpiarMosaicosJugador();
-                tablero.llenarMosaicos(tablero.jugador);
                 break;
             case KeyEvent.VK_LEFT:
                 tablero.jugador.moveLeft();
-                tablero.limpiarMosaicosJugador();
-                tablero.llenarMosaicos(tablero.jugador);
                 break;
+        }
+        tablero.llenarMosaicos(tablero.jugador);
+        if (!tablero.jugador.getIsAlive() || tablero.jugador.gano()) {
+            finalizar();
         }
 
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {}
-    public static void main(String args[]){
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+    }
+
+    public static void main(String args[]) {
     }
 }
