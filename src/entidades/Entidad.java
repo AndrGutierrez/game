@@ -8,13 +8,13 @@ import java.awt.*;
 import javax.swing.*;
 
 public class Entidad extends JPanel implements TableroInterface, EntityInterface {
-    static int ubicacionX;
-    static int ubicacionY;
-    static int alto;
-    static int ancho;
-    static int type;
-    static String imagen;
-    static Colisionador colisionador;
+    protected int ubicacionX;
+    protected int ubicacionY;
+    protected int alto;
+    protected int ancho;
+    protected int type;
+    protected String imagen;
+    protected Colisionador colisionador;
 
     public Entidad(int ancho, int alto, String imagen, int ubicacionX, int ubicacionY, int type) {
         colisionador = new Colisionador(ancho, alto, ubicacionX, ubicacionY);
@@ -24,7 +24,6 @@ public class Entidad extends JPanel implements TableroInterface, EntityInterface
         this.alto = alto;
         this.type = type;
         this.imagen = imagen;
-        // System.out.println(this.imagen);
         setSize(ancho, alto);
         setLocation(ubicacionX, ubicacionY);
     }
@@ -84,6 +83,10 @@ public class Entidad extends JPanel implements TableroInterface, EntityInterface
             ubicacionX -= moveUnit * tileSize;
             move();
         }
+        // else {
+        // System.out.print("a");
+        // ubicacionX = width - this.ancho;
+        // }
     }
 
     public void moveDown() {

@@ -44,13 +44,13 @@ public class Game extends JFrame implements TableroInterface, KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
 
-        // for(int i=0; i<height/tileSize; i++){
-        // for(int j=0; j<width/tileSize; j++){
-        // System.out.print(tablero.tiles[i][j]+ " ");
-        // }
+        for(int i=0; i<height/tileSize; i++){
+        for(int j=0; j<width/tileSize; j++){
+        System.out.print(tablero.tiles[i][j]+ " ");
+        }
 
-        // System.out.println("");
-        // }
+        System.out.println("");
+        }
         tablero.limpiarMosaicos(tablero.jugador);
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
