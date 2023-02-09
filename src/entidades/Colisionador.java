@@ -53,8 +53,8 @@ public class Colisionador implements TableroInterface, EntityInterface {
     }
 
     public void verificarColisiones(int tile, Entidad entidad) {
-        // System.out.println(tile+", "+entidad.getType());
         if (tile != entidad.getType() && tile != 0) {
+            System.out.println(tile + ", " + entidad.getType());
             entidad.chocar();
         }
     }

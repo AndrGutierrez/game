@@ -50,11 +50,15 @@ public class Tablero extends JPanel implements TableroInterface {
         Timer timer = new Timer(500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // System.out.println("TOOL_TIP_TEXT_KEY");
+                limpiarMosaicos(enemigos[0]);
                 for (int i = 0; i < cantidadEnemigos; i++) {
                     enemigos[i].moveLeft();
-                    limpiarMosaicos(enemigos[i]);
                     llenarMosaicos(enemigos[i]);
+                }
+
+                if (!jugador.getIsAlive()) {
+                    // finalizar();
+                    // System.out.print("timear");
                 }
             }
         });
